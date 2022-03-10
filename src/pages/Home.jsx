@@ -5,7 +5,11 @@ class Home extends React.Component {
     return (
       <div data-testid="page-not-found">
         <input type="text" />
-        <p data-testid="home-initial-message">Digite algum termo de pesquisa ou escolha uma categoria.</p>
+        <p
+          data-testid="home-initial-message"
+        >
+          Digite algum termo de pesquisa ou escolha uma categoria.
+        </p>
       </div>
     );
   }

@@ -1,7 +1,6 @@
 import React from 'react';
 import ButtonCart from '../components/ButtonCart';
 
-
 class Home extends React.Component {
   render() {
     return (

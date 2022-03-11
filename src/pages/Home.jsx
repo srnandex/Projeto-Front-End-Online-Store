@@ -72,6 +72,7 @@ class Home extends React.Component {
               title={ e.title }
               thumbnail={ e.thumbnail }
               price={ e.price }
+              id={ e.id }
             />
           ))
           : <h2>Nenhum produto foi encontrado</h2>}
@@ -81,6 +82,7 @@ class Home extends React.Component {
             title={ eleme.title }
             thumbnail={ eleme.thumbnail }
             price={ eleme.price }
+            id={ eleme.id }
           />
         ))}
       </div>

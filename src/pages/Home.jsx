@@ -1,6 +1,8 @@
 import React from 'react';
 import ButtonCart from '../components/ButtonCart';
-import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import { getCategories,
+  getProductsFromCategoryAndQuery,
+  getProductsCategories } from '../services/api';
 import Categories from '../components/Categories';
 import ProductCards from '../components/ProductCard';
 
@@ -10,6 +12,7 @@ class Home extends React.Component {
 
     this.state = {
       productsList: [],
+      categoriesProduct: [],
       categoriesList: [],
       query: '',
     };
@@ -30,13 +33,18 @@ class Home extends React.Component {
 
   productCard = async () => {
     const { query } = this.state;
-    const { results } = await getProductsFromCategoryAndQuery(query);
+    const { results } = await getProductsFromCategoryAndQuery('', query);
     this.setState({ productsList: results });
   }
 
+  categoriesResults = async ({ target }) => {
+    const { results } = await getProductsCategories(target.id);
+    this.setState({ categoriesProduct: results });
+  };
+
   render() {
-    const { categoriesList, productsList } = this.state;
-    console.log(productsList);
+    const { categoriesList, productsList, categoriesProduct } = this.state;
+    console.log(categoriesProduct);
     return (
       <div data-testid="page-not-found">
         <input type="text" data-testid="query-input" onChange={ this.handleChange } />
@@ -52,7 +60,9 @@ class Home extends React.Component {
         {categoriesList.map((element) => (
           <Categories
             key={ element.id }
+            categoriesId={ element.id }
             categoriesName={ element.name }
+            categoriesResults={ this.categoriesResults }
           />
         ))}
         {(productsList.length > 0)
@@ -65,6 +75,14 @@ class Home extends React.Component {
             />
           ))
           : <h2>Nenhum produto foi encontrado</h2>}
+        {categoriesProduct.map((eleme) => (
+          <ProductCards
+            key={ eleme.id }
+            title={ eleme.title }
+            thumbnail={ eleme.thumbnail }
+            price={ eleme.price }
+          />
+        ))}
       </div>
     );
   }

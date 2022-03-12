@@ -10,11 +10,14 @@ class Home extends React.Component {
   constructor() {
     super();
 
+    this.handleChange = this.handleChange.bind(this);
+
     this.state = {
       productsList: [],
       categoriesProduct: [],
       categoriesList: [],
       query: '',
+      categoryId: '',
     };
   }
 
@@ -31,24 +34,33 @@ class Home extends React.Component {
     });
   }
 
-  productCard = async () => {
+  productCard = async ({ target: { value } }) => {
     const { query } = this.state;
-    const { results } = await getProductsFromCategoryAndQuery('', query);
-    this.setState({ productsList: results });
+    const { results } = await getProductsFromCategoryAndQuery(value, query);
+    this.setState({
+      productsList: results,
+      categoryId: value },
+    () => this.categoriesResults());
   }
 
-  categoriesResults = async ({ target }) => {
-    const { results } = await getProductsCategories(target.id);
+  categoriesResults = async () => {
+    const { query, categoryId } = this.state;
+    const { results } = await getProductsFromCategoryAndQuery(categoryId, query);
     this.setState({ categoriesProduct: results });
   };
 
   render() {
-    const { categoriesList, productsList, categoriesProduct } = this.state;
-    console.log(categoriesProduct);
+    const { categoriesList, productsList, categoriesProduct, categoryId } = this.state;
+    // console.log(categoriesProduct);
+    console.log(categoryId);
     return (
       <div data-testid="page-not-found">
         <input type="text" data-testid="query-input" onChange={ this.handleChange } />
-        <button data-testid="query-button" type="button" onClick={ this.productCard }>
+        <button
+          data-testid="query-button"
+          type="button"
+          onClick={ () => this.categoriesResults() }
+        >
           Pesquisar
         </button>
         <p
@@ -62,27 +74,38 @@ class Home extends React.Component {
             key={ element.id }
             categoriesId={ element.id }
             categoriesName={ element.name }
-            categoriesResults={ this.categoriesResults }
+            categoriesResults={ this.productCard }
           />
         ))}
-        {(productsList.length > 0)
-          ? productsList.map((e) => (
-            <ProductCards
-              key={ e.id }
-              title={ e.title }
-              thumbnail={ e.thumbnail }
-              price={ e.price }
-              id={ e.id }
-            />
-          ))
-          : <h2>Nenhum produto foi encontrado</h2>}
-        {categoriesProduct.map((eleme) => (
+        {(categoriesProduct.length > 0
+        && productsList.length === 0) && categoriesProduct.map((eleme) => (
           <ProductCards
             key={ eleme.id }
             title={ eleme.title }
             thumbnail={ eleme.thumbnail }
             price={ eleme.price }
             id={ eleme.id }
+          />
+        ))}
+        {(productsList.length > 0
+        && categoriesProduct.length === 0) && productsList.map((k) => (
+          <ProductCards
+            key={ k.id }
+            title={ k.title }
+            thumbnail={ k.thumbnail }
+            price={ k.price }
+            id={ k.id }
+          />
+        ))}
+        {(categoriesProduct.length > 0
+        && productsList.length > 0)
+        && categoriesProduct.map((y) => (
+          <ProductCards
+            key={ y.id }
+            title={ y.title }
+            thumbnail={ y.thumbnail }
+            price={ y.price }
+            id={ y.id }
           />
         ))}
       </div>

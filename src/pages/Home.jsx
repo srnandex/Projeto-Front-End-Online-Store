@@ -2,7 +2,7 @@ import React from 'react';
 import ButtonCart from '../components/ButtonCart';
 import { getCategories,
   getProductsFromCategoryAndQuery,
-  getProductsCategories } from '../services/api';
+  /* getProductsCategories */ } from '../services/api';
 import Categories from '../components/Categories';
 import ProductCards from '../components/ProductCard';
 

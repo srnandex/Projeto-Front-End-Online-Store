@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ButtonCart from '../components/ButtonCart';
 import { getCategories,
-  getProductsFromCategoryAndQuery,
+  /* getProductsFromCategoryAndQuery */
   /* getProductsCategories */ } from '../services/api';
+// import { saveProducts } from '../services/saveProducts';
 import Categories from '../components/Categories';
 import ProductCards from '../components/ProductCard';
 
@@ -10,14 +12,8 @@ class Home extends React.Component {
   constructor() {
     super();
 
-    this.handleChange = this.handleChange.bind(this);
-
     this.state = {
-      productsList: [],
-      categoriesProduct: [],
       categoriesList: [],
-      query: '',
-      categoryId: '',
     };
   }
 
@@ -27,39 +23,21 @@ class Home extends React.Component {
     this.setState({ categoriesList: categoriesArray });
   }
 
-  handleChange = ({ target }) => {
-    const { value } = target;
-    this.setState({
-      query: value,
-    });
-  }
-
-  productCard = async ({ target: { value } }) => {
-    const { query } = this.state;
-    const { results } = await getProductsFromCategoryAndQuery(value, query);
-    this.setState({
-      productsList: results,
-      categoryId: value },
-    () => this.categoriesResults());
-  }
-
-  categoriesResults = async () => {
-    const { query, categoryId } = this.state;
-    const { results } = await getProductsFromCategoryAndQuery(categoryId, query);
-    this.setState({ categoriesProduct: results });
-  };
-
   render() {
-    const { categoriesList, productsList, categoriesProduct, categoryId } = this.state;
+    const { productLists, categoriesProduct, categoryId,
+      handle, productCard, saveCart, categoriesResults } = this.props;
+    console.log(this.props);
+    const { categoriesList } = this.state;
+    console.log(productLists);
     // console.log(categoriesProduct);
     console.log(categoryId);
     return (
       <div data-testid="page-not-found">
-        <input type="text" data-testid="query-input" onChange={ this.handleChange } />
+        <input type="text" data-testid="query-input" onChange={ handle } />
         <button
           data-testid="query-button"
           type="button"
-          onClick={ () => this.categoriesResults() }
+          onClick={ () => categoriesResults() }
         >
           Pesquisar
         </button>
@@ -74,31 +52,33 @@ class Home extends React.Component {
             key={ element.id }
             categoriesId={ element.id }
             categoriesName={ element.name }
-            categoriesResults={ this.productCard }
+            categoriesResults={ productCard }
           />
         ))}
         {(categoriesProduct.length > 0
-        && productsList.length === 0) && categoriesProduct.map((eleme) => (
+        && productLists.length === 0) && categoriesProduct.map((eleme) => (
           <ProductCards
             key={ eleme.id }
             title={ eleme.title }
             thumbnail={ eleme.thumbnail }
             price={ eleme.price }
             id={ eleme.id }
+            saveProduct={ saveCart }
           />
         ))}
-        {(productsList.length > 0
-        && categoriesProduct.length === 0) && productsList.map((k) => (
+        {(productLists.length > 0
+        && categoriesProduct.length === 0) && productLists.map((k) => (
           <ProductCards
             key={ k.id }
             title={ k.title }
             thumbnail={ k.thumbnail }
             price={ k.price }
             id={ k.id }
+            saveProduct={ saveCart }
           />
         ))}
         {(categoriesProduct.length > 0
-        && productsList.length > 0)
+        && productLists.length > 0)
         && categoriesProduct.map((y) => (
           <ProductCards
             key={ y.id }
@@ -106,6 +86,7 @@ class Home extends React.Component {
             thumbnail={ y.thumbnail }
             price={ y.price }
             id={ y.id }
+            saveProduct={ saveCart }
           />
         ))}
       </div>
@@ -114,3 +95,13 @@ class Home extends React.Component {
 }
 
 export default Home;
+
+Home.propTypes = {
+  productLists: PropTypes.arrayOf(PropTypes.object).isRequired,
+  categoriesProduct: PropTypes.arrayOf(PropTypes.object).isRequired,
+  categoryId: PropTypes.string.isRequired,
+  handle: PropTypes.func.isRequired,
+  productCard: PropTypes.func.isRequired,
+  saveCart: PropTypes.func.isRequired,
+  categoriesResults: PropTypes.func.isRequired,
+};

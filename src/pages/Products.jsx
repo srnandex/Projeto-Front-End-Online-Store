@@ -7,29 +7,37 @@ class Products extends React.Component {
   constructor() {
     super();
     this.state = {
-      infoProduct: [],
+      productSpecs: [],
+      infoDetails: [],
     };
   }
 
   async componentDidMount() {
     const { match: { params: { id } } } = this.props;
-    const productsArray = await getProducts(id);
-    this.setState({ infoProduct: productsArray });
+    const { attributes } = await getProducts(id);
+    const productDetails = await getProducts(id);
+    this.setState({ productSpecs: attributes, infoDetails: productDetails });
   }
 
   render() {
-    const { infoProduct } = this.state;
+    const { productSpecs, infoDetails } = this.state;
     return (
       <div data-testid="product-detail-name">
         <ButtonCart />
-        <h1>{ infoProduct.title }</h1>
-        <img src={ infoProduct.thumbnail } alt={ infoProduct.title } />
-        <p>{ infoProduct.price }</p>
+        <h1>{ infoDetails.title }</h1>
+        <img src={ infoDetails.thumbnail } alt={ infoDetails.title } />
+        <h3>{infoDetails.price}</h3>
+        {productSpecs.length > 0 && productSpecs.map((element) => (
+          <h1 key={ element.name }>
+            {(element.name)}
+            :
+            {(element.value_name)}
+          </h1>
+        ))}
       </div>
     );
   }
 }
-
 Products.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -37,5 +45,4 @@ Products.propTypes = {
     }),
   }).isRequired,
 };
-
 export default Products;

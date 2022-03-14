@@ -3,22 +3,49 @@ import PropTypes from 'prop-types';
 
 class ShoppingCart extends React.Component {
   render() {
-    const { products } = this.props;
-    console.log(products);
+    const { products, increaseProductQuantity,
+      decreaseProductQuantity, deleteProduct } = this.props;
+    products.map((element) => console.log(element.quantity));
     return (
       <div>
-        {products.length > 0 ? products.map((element) => (
-          <div key={ element.title }>
+        {products.length > 0 ? products.map(({ title, quantity, id, thumbnail }) => (
+          <div key={ title }>
             <p
               data-testid="shopping-cart-product-name"
             >
-              {element.title}
+              {title}
             </p>
             <h2
               data-testid="shopping-cart-product-quantity"
             >
-              { element.quantity }
+              {quantity}
             </h2>
+            <img src={ thumbnail } alt={ title } />
+            <button
+              type="button"
+              name={ id }
+              data-testid="product-increase-quantity"
+              onClick={ (e) => increaseProductQuantity(e) }
+            >
+              +
+            </button>
+            <button
+              type="button"
+              name={ id }
+              data-testid="product-decrease-quantity"
+              onClick={ (e) => decreaseProductQuantity(e) }
+            >
+              -
+            </button>
+            <div>
+              <button
+                type="button"
+                name={ id }
+                onClick={ (e) => deleteProduct(e) }
+              >
+                X
+              </button>
+            </div>
           </div>
         ))
           : (
@@ -33,4 +60,7 @@ export default ShoppingCart;
 
 ShoppingCart.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object).isRequired,
+  increaseProductQuantity: PropTypes.func.isRequired,
+  decreaseProductQuantity: PropTypes.func.isRequired,
+  deleteProduct: PropTypes.func.isRequired,
 };

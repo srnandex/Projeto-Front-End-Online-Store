@@ -29,7 +29,7 @@ class Home extends React.Component {
     console.log(this.props);
     const { categoriesList } = this.state;
     console.log(productLists);
-    // console.log(categoriesProduct);
+    console.log(categoriesProduct);
     console.log(categoryId);
     return (
       <div data-testid="page-not-found">

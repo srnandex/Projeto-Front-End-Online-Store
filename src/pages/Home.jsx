@@ -25,7 +25,7 @@ class Home extends React.Component {
 
   render() {
     const { productLists, categoriesProduct, categoryId,
-      handle, productCard, saveCart, categoriesResults } = this.props;
+      handle, productCard, saveCart, categoriesResults, cartQuantity } = this.props;
     console.log(this.props);
     const { categoriesList } = this.state;
     console.log(productLists);
@@ -46,7 +46,7 @@ class Home extends React.Component {
         >
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
-        <ButtonCart />
+        <ButtonCart cartQuantity={ cartQuantity } />
         {categoriesList.map((element) => (
           <Categories
             key={ element.id }
@@ -104,4 +104,5 @@ Home.propTypes = {
   productCard: PropTypes.func.isRequired,
   saveCart: PropTypes.func.isRequired,
   categoriesResults: PropTypes.func.isRequired,
+  cartQuantity: PropTypes.number.isRequired,
 };

@@ -20,7 +20,13 @@ export default class App extends Component {
       categoryId: '',
       query: '',
       savedProducts: [],
+      cartQuantity: 0,
     };
+  }
+
+  componentDidMount() {
+    const retrievedCartNumber = JSON.parse(localStorage.getItem('cartNumber'));
+    this.setState({ cartQuantity: retrievedCartNumber });
   }
 
   handleChange = ({ target }) => {
@@ -52,15 +58,24 @@ export default class App extends Component {
       const productAlreadyInTheCart = savedProducts.find(({ id }) => id === name);
       if (productAlreadyInTheCart) {
         productAlreadyInTheCart.quantity += 1;
-        this.setState({ savedProducts });
+        this.setState({ savedProducts }, () => this.increaseCartLength());
       }
       if (!productAlreadyInTheCart) {
         desiredProduct.quantity = 1;
         this.setState((prevState) => ({
           savedProducts: [...prevState.savedProducts, desiredProduct],
-        }));
+        }), () => this.increaseCartLength());
       }
     }
+  }
+
+  increaseCartLength = () => {
+    this.setState((prevState) => ({
+      cartQuantity: prevState.cartQuantity + 1,
+    }), () => {
+      const { cartQuantity } = this.state;
+      localStorage.setItem('cartNumber', JSON.stringify(cartQuantity));
+    });
   }
 
   increaseProductQuantity({ target: { name } }) {
@@ -92,8 +107,9 @@ export default class App extends Component {
   }
 
   render() {
-    const { savedProducts, categoryId, productLists } = this.state;
-    console.log(savedProducts);
+    const { savedProducts, categoryId, productLists, cartQuantity } = this.state;
+    // console.log(savedProducts);
+    console.log(cartQuantity);
 
     return (
       <BrowserRouter>
@@ -133,6 +149,7 @@ export default class App extends Component {
                 { ...props }
                 saveCart={ this.saveCart }
                 products={ savedProducts }
+                cartQuantity={ cartQuantity }
               />)
             }
           />

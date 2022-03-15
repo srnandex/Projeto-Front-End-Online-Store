@@ -50,12 +50,13 @@ class Products extends React.Component {
     const { productSpecs, infoDetails } = this.state;
     const ratingArrayLength = 5;
     const { avaliacoes } = this.state;
-    const { match: { params: { id } }, saveCart, email, description } = this.props;
+    const { match: { params: { id } },
+      saveCart, email, description, cartQuantity } = this.props;
 
     return (
       <>
         <div data-testid="product-detail-name">
-          <ButtonCart />
+          <ButtonCart cartQuantity={ cartQuantity } />
           <h1>{ infoDetails.title }</h1>
           <img src={ infoDetails.thumbnail } alt={ infoDetails.title } />
           <h3>{infoDetails.price}</h3>
@@ -143,6 +144,7 @@ Products.propTypes = {
   saveCart: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  cartQuantity: PropTypes.number.isRequired,
 };
 
 // Products.defaultProps = {

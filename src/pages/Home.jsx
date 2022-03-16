@@ -61,6 +61,7 @@ class Home extends React.Component {
             price={ element.price }
             id={ element.id }
             saveProduct={ saveCart }
+            freeShipping={ element.shipping.free_shipping }
           />
         ))}
       </div>

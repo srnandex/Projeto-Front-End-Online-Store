@@ -16,14 +16,15 @@ class Products extends React.Component {
       email: '',
       avaliacoes: [],
       description: '',
+      shipping: [],
     };
   }
 
   async componentDidMount() {
     const { match: { params: { id } } } = this.props;
-    const { attributes } = await getProducts(id);
+    const { attributes, shipping } = await getProducts(id);
     const productDetails = await getProducts(id);
-    this.setState({ productSpecs: attributes, infoDetails: productDetails });
+    this.setState({ productSpecs: attributes, infoDetails: productDetails, shipping });
     const retrievedUserInput = JSON.parse(localStorage.getItem('userInput'));
     if (retrievedUserInput !== null) {
       this.setState({ avaliacoes: retrievedUserInput });
@@ -47,7 +48,7 @@ class Products extends React.Component {
   }
 
   render() {
-    const { productSpecs, infoDetails } = this.state;
+    const { productSpecs, infoDetails, shipping } = this.state;
     const ratingArrayLength = 5;
     const { avaliacoes } = this.state;
     const { match: { params: { id } },
@@ -59,6 +60,7 @@ class Products extends React.Component {
           <ButtonCart cartQuantity={ cartQuantity } />
           <h1>{ infoDetails.title }</h1>
           <img src={ infoDetails.thumbnail } alt={ infoDetails.title } />
+          {shipping.free_shipping && <span>Frete Grátis</span>}
           <h3>{infoDetails.price}</h3>
           {productSpecs.length > 0 && productSpecs.map((element) => (
             <h1 key={ element.name }>

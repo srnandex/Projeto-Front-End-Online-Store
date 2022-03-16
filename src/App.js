@@ -14,13 +14,11 @@ export default class App extends Component {
     this.decreaseProductQuantity = this.decreaseProductQuantity.bind(this);
     this.deleteProduct = this.deleteProduct.bind(this);
     this.state = {
-      productLists: [],
       categoriesProduct: [],
       categoryId: '',
       query: '',
       savedProducts: [],
       cartQuantity: 0,
-      isButtonDisabled: false,
     };
   }
 
@@ -37,10 +35,7 @@ export default class App extends Component {
   }
 
   productCard = async ({ target: { value } }) => {
-    const { query } = this.state;
-    const { results } = await getProductsFromCategoryAndQuery(value, query);
     this.setState({
-      productLists: results,
       categoryId: value },
     () => this.categoriesResults());
   }
@@ -52,8 +47,8 @@ export default class App extends Component {
   };
 
   saveCart = ({ target: { name } }) => {
-    const { savedProducts, productLists, categoriesProduct } = this.state;
-    if (productLists) {
+    const { savedProducts, categoriesProduct } = this.state;
+    if (categoriesProduct) {
       const desiredProduct = categoriesProduct.find(({ id }) => id === name);
       const productAlreadyInTheCart = savedProducts.find(({ id }) => id === name);
       if (productAlreadyInTheCart) {
@@ -61,9 +56,10 @@ export default class App extends Component {
         this.setState({ savedProducts }, () => this.increaseCartLength());
       }
       if (!productAlreadyInTheCart) {
-        desiredProduct.quantity = 1;
+        const availableQuantityInStock = desiredProduct.available_quantity;
         this.setState((prevState) => ({
-          savedProducts: [...prevState.savedProducts, desiredProduct],
+          savedProducts: [...prevState.savedProducts,
+            { ...desiredProduct, quantity: 1, availableQuantityInStock }],
         }), () => this.increaseCartLength());
       }
     }
@@ -82,19 +78,10 @@ export default class App extends Component {
     const { savedProducts } = this.state;
     const productAlreadyInTheCart = savedProducts.find(({ id }) => id === name);
     if (productAlreadyInTheCart) {
-      const availabeQuantity = productAlreadyInTheCart.available_quantity;
-      const { quantity } = productAlreadyInTheCart;
-      if (quantity < availabeQuantity) {
-        savedProducts.find((element) => element.id === name).quantity += 1;
-        this.setState({ isButtonDisabled: false });
-      }
-      if (quantity >= availabeQuantity) {
-        this.setState({ isButtonDisabled: true });
-      }
+      savedProducts.find((element) => element.id === name).quantity += 1;
     }
     this.setState({ savedProducts });
   }
-
 
   decreaseProductQuantity({ target: { name } }) {
     const { savedProducts } = this.state;
@@ -116,9 +103,8 @@ export default class App extends Component {
   }
 
   render() {
-    const { savedProducts, categoryId,
-      productLists, cartQuantity, isButtonDisabled } = this.state;
-    // console.log(savedProducts);
+    const { savedProducts, categoryId, cartQuantity } = this.state;
+    console.log(savedProducts);
     console.log(cartQuantity);
 
     return (
@@ -144,11 +130,9 @@ export default class App extends Component {
               () => (<ShoppingCart
                 categoryId={ categoryId }
                 products={ savedProducts }
-                productList={ productLists }
                 increaseProductQuantity={ this.increaseProductQuantity }
                 decreaseProductQuantity={ this.decreaseProductQuantity }
                 deleteProduct={ this.deleteProduct }
-                isButtonDisabled={ isButtonDisabled }
               />)
             }
           />

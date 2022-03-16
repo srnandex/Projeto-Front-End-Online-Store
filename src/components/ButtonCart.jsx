@@ -16,7 +16,7 @@ class ButtonCart extends React.Component {
         <span
           data-testid="shopping-cart-size"
         >
-          { cartQuantity}
+          { cartQuantity }
         </span>
       </Link>
     );

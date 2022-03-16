@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 class ShoppingCart extends React.Component {
   render() {
     const { products, increaseProductQuantity,
-      decreaseProductQuantity, deleteProduct } = this.props;
+      decreaseProductQuantity, deleteProduct, isButtonDisabled } = this.props;
     products.map((element) => console.log(element.quantity));
     return (
       <div>
@@ -26,6 +26,7 @@ class ShoppingCart extends React.Component {
               type="button"
               name={ id }
               data-testid="product-increase-quantity"
+              disabled={ isButtonDisabled }
               onClick={ (e) => increaseProductQuantity(e) }
             >
               +
@@ -67,4 +68,5 @@ ShoppingCart.propTypes = {
   increaseProductQuantity: PropTypes.func.isRequired,
   decreaseProductQuantity: PropTypes.func.isRequired,
   deleteProduct: PropTypes.func.isRequired,
+  isButtonDisabled: PropTypes.bool.isRequired,
 };

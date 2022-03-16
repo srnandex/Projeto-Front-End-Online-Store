@@ -10,7 +10,6 @@ export default class App extends Component {
   constructor() {
     super();
 
-    this.saveCart = this.saveCart.bind(this);
     this.increaseProductQuantity = this.increaseProductQuantity.bind(this);
     this.decreaseProductQuantity = this.decreaseProductQuantity.bind(this);
     this.deleteProduct = this.deleteProduct.bind(this);
@@ -21,6 +20,7 @@ export default class App extends Component {
       query: '',
       savedProducts: [],
       cartQuantity: 0,
+      isButtonDisabled: false,
     };
   }
 
@@ -53,8 +53,8 @@ export default class App extends Component {
 
   saveCart = ({ target: { name } }) => {
     const { savedProducts, productLists, categoriesProduct } = this.state;
-    if (categoriesProduct && productLists) {
-      const desiredProduct = productLists.find(({ id }) => id === name);
+    if (productLists) {
+      const desiredProduct = categoriesProduct.find(({ id }) => id === name);
       const productAlreadyInTheCart = savedProducts.find(({ id }) => id === name);
       if (productAlreadyInTheCart) {
         productAlreadyInTheCart.quantity += 1;
@@ -79,13 +79,22 @@ export default class App extends Component {
   }
 
   increaseProductQuantity({ target: { name } }) {
-    const { savedProducts, productLists } = this.state;
-    const productAlreadyInTheCart = productLists.find(({ id }) => id === name);
+    const { savedProducts } = this.state;
+    const productAlreadyInTheCart = savedProducts.find(({ id }) => id === name);
     if (productAlreadyInTheCart) {
-      savedProducts.find((element) => element.id === name).quantity += 1;
+      const availabeQuantity = productAlreadyInTheCart.available_quantity;
+      const { quantity } = productAlreadyInTheCart;
+      if (quantity < availabeQuantity) {
+        savedProducts.find((element) => element.id === name).quantity += 1;
+        this.setState({ isButtonDisabled: false });
+      }
+      if (quantity >= availabeQuantity) {
+        this.setState({ isButtonDisabled: true });
+      }
     }
     this.setState({ savedProducts });
   }
+
 
   decreaseProductQuantity({ target: { name } }) {
     const { savedProducts } = this.state;
@@ -107,7 +116,8 @@ export default class App extends Component {
   }
 
   render() {
-    const { savedProducts, categoryId, productLists, cartQuantity } = this.state;
+    const { savedProducts, categoryId,
+      productLists, cartQuantity, isButtonDisabled } = this.state;
     // console.log(savedProducts);
     console.log(cartQuantity);
 
@@ -138,6 +148,7 @@ export default class App extends Component {
                 increaseProductQuantity={ this.increaseProductQuantity }
                 decreaseProductQuantity={ this.decreaseProductQuantity }
                 deleteProduct={ this.deleteProduct }
+                isButtonDisabled={ isButtonDisabled }
               />)
             }
           />

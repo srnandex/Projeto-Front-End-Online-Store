@@ -24,13 +24,11 @@ class Home extends React.Component {
   }
 
   render() {
-    const { productLists, categoriesProduct, categoryId,
+    const { categoriesProduct,
       handle, productCard, saveCart, categoriesResults, cartQuantity } = this.props;
-    console.log(this.props);
+    // console.log(this.props);
     const { categoriesList } = this.state;
-    console.log(productLists);
     console.log(categoriesProduct);
-    console.log(categoryId);
     return (
       <div data-testid="page-not-found">
         <input type="text" data-testid="query-input" onChange={ handle } />
@@ -55,37 +53,13 @@ class Home extends React.Component {
             categoriesResults={ productCard }
           />
         ))}
-        {(categoriesProduct.length > 0
-        && productLists.length === 0) && categoriesProduct.map((eleme) => (
+        {categoriesProduct.map((element) => (
           <ProductCards
-            key={ eleme.id }
-            title={ eleme.title }
-            thumbnail={ eleme.thumbnail }
-            price={ eleme.price }
-            id={ eleme.id }
-            saveProduct={ saveCart }
-          />
-        ))}
-        {(productLists.length > 0
-        && categoriesProduct.length === 0) && productLists.map((k) => (
-          <ProductCards
-            key={ k.id }
-            title={ k.title }
-            thumbnail={ k.thumbnail }
-            price={ k.price }
-            id={ k.id }
-            saveProduct={ saveCart }
-          />
-        ))}
-        {(categoriesProduct.length > 0
-        && productLists.length > 0)
-        && categoriesProduct.map((y) => (
-          <ProductCards
-            key={ y.id }
-            title={ y.title }
-            thumbnail={ y.thumbnail }
-            price={ y.price }
-            id={ y.id }
+            key={ element.id }
+            title={ element.title }
+            thumbnail={ element.thumbnail }
+            price={ element.price }
+            id={ element.id }
             saveProduct={ saveCart }
           />
         ))}
@@ -97,9 +71,7 @@ class Home extends React.Component {
 export default Home;
 
 Home.propTypes = {
-  productLists: PropTypes.arrayOf(PropTypes.object).isRequired,
   categoriesProduct: PropTypes.arrayOf(PropTypes.object).isRequired,
-  categoryId: PropTypes.string.isRequired,
   handle: PropTypes.func.isRequired,
   productCard: PropTypes.func.isRequired,
   saveCart: PropTypes.func.isRequired,

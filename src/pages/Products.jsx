@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FaTruck, FaStar } from 'react-icons/fa';
 import ButtonCart from '../components/ButtonCart';
 import { getProducts } from '../services/api';
 
@@ -17,6 +18,7 @@ class Products extends React.Component {
       avaliacoes: [],
       description: '',
       shipping: [],
+      rating: 0,
     };
   }
 
@@ -45,14 +47,20 @@ class Products extends React.Component {
       const { avaliacoes } = this.state;
       localStorage.setItem('userInput', JSON.stringify(avaliacoes));
     });
+    this.setState({
+      rating: '',
+      email: '',
+      description: '',
+    });
   }
 
   render() {
-    const { productSpecs, infoDetails, shipping } = this.state;
+    const { productSpecs, infoDetails, shipping, rating } = this.state;
     const ratingArrayLength = 5;
     const { avaliacoes } = this.state;
     const { match: { params: { id } },
-      saveCart, email, description, cartQuantity } = this.props;
+      saveCart, cartQuantity } = this.props;
+    const { email, description } = this.state;
 
     return (
       <>
@@ -60,7 +68,13 @@ class Products extends React.Component {
           <ButtonCart cartQuantity={ cartQuantity } />
           <h1>{ infoDetails.title }</h1>
           <img src={ infoDetails.thumbnail } alt={ infoDetails.title } />
-          {shipping.free_shipping && <span>Frete Grátis</span>}
+          {shipping.free_shipping
+          && (
+            <span>
+              Frete Grátis
+              <FaTruck />
+            </span>
+          )}
           <h3>{infoDetails.price}</h3>
           {productSpecs.length > 0 && productSpecs.map((element) => (
             <h1 key={ element.name }>
@@ -95,13 +109,14 @@ class Products extends React.Component {
             return (
               <label htmlFor="rating" key={ index }>
                 <input
+                  className="input-star"
                   type="radio"
                   data-testid={ `${index}-rating` }
                   name="rating"
                   value={ index }
                   onClick={ (e) => this.handleChange(e) }
                 />
-                fav
+                <FaStar className="star" size="30" color={ rating >= index ? '#fdee00' : '#1B1212' } />
               </label>);
           })}
           <label htmlFor="description">

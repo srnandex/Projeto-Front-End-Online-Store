@@ -5,6 +5,7 @@ import Products from './pages/Products';
 import ShoppingCart from './pages/ShoppingCart';
 import Checkout from './pages/Checkout';
 import { getProductsFromCategoryAndQuery } from './services/api';
+import './App.css';
 
 export default class App extends Component {
   constructor() {

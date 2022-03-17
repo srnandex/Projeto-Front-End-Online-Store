@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { FaShoppingCart } from 'react-icons/fa';
 
 class ButtonCart extends React.Component {
   render() {
@@ -11,7 +12,7 @@ class ButtonCart extends React.Component {
           type="button"
           data-testid="shopping-cart-button"
         >
-          Carrinho
+          <FaShoppingCart />
         </button>
         <span
           data-testid="shopping-cart-size"

@@ -116,7 +116,13 @@ class Products extends React.Component {
                   value={ index }
                   onClick={ (e) => this.handleChange(e) }
                 />
-                <FaStar className="star" size="30" color={ rating >= index ? '#fdee00' : '#1B1212' } />
+                <FaStar
+                  className="star"
+                  size="30"
+                  color={ rating >= index
+                    ? '#fdee00'
+                    : '#1B1212' }
+                />
               </label>);
           })}
           <label htmlFor="description">
@@ -159,8 +165,6 @@ Products.propTypes = {
     }),
   }).isRequired,
   saveCart: PropTypes.func.isRequired,
-  email: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
   cartQuantity: PropTypes.number.isRequired,
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { FaTruck } from 'react-icons/fa';
 
 class ProductCards extends React.Component {
   render() {
@@ -13,11 +14,13 @@ class ProductCards extends React.Component {
         {freeShipping
         && (
           <span data-testid="free-shipping">
+            <FaTruck />
             Free shipping
           </span>
         )}
-
-        <img src={ thumbnail } alt={ title } />
+        <div className="img-product-card">
+          <img src={ thumbnail } alt={ title } />
+        </div>
         <p>{price}</p>
         <button
           type="button"

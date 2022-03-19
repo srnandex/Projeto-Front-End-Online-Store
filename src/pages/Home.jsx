@@ -43,6 +43,11 @@ const ButtonCartWrapper = styled.div`
   position: fixed;
 `;
 
+const WrapperEverything = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 class Home extends React.Component {
   constructor() {
     super();
@@ -65,7 +70,7 @@ class Home extends React.Component {
     const { categoriesList } = this.state;
     console.log(categoriesProduct);
     return (
-      <div data-testid="page-not-found">
+      <WrapperEverything data-testid="page-not-found">
         <Search>
           <input
             style={ { borderRadius: '50px', width: '550px' } }
@@ -90,17 +95,17 @@ class Home extends React.Component {
         <ButtonCartWrapper>
           <ButtonCart cartQuantity={ cartQuantity } />
         </ButtonCartWrapper>
+        <StyledCategories>
+          {categoriesList.map((element) => (
+            <Categories
+              key={ element.id }
+              categoriesId={ element.id }
+              categoriesName={ element.name }
+              categoriesResults={ productCard }
+            />
+          ))}
+        </StyledCategories>
         <Wrapper>
-          <StyledCategories>
-            {categoriesList.map((element) => (
-              <Categories
-                key={ element.id }
-                categoriesId={ element.id }
-                categoriesName={ element.name }
-                categoriesResults={ productCard }
-              />
-            ))}
-          </StyledCategories>
           <StyledContainerProducts>
             {categoriesProduct.map((element) => (
               <ProductCards
@@ -116,7 +121,7 @@ class Home extends React.Component {
             ))}
           </StyledContainerProducts>
         </Wrapper>
-      </div>
+      </WrapperEverything>
     );
   }
 }

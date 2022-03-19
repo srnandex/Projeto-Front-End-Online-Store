@@ -7,7 +7,7 @@ class ButtonCart extends React.Component {
   render() {
     const { cartQuantity } = this.props;
     return (
-      <Link to="/shoppingCart">
+      <Link to="/shoppingCart" style={ { textDecoration: 'none' } }>
         <button
           className="buttonCart"
           type="button"
@@ -17,6 +17,7 @@ class ButtonCart extends React.Component {
         </button>
         <span
           data-testid="shopping-cart-size"
+          style={ { color: 'orange' } }
         >
           { cartQuantity }
         </span>

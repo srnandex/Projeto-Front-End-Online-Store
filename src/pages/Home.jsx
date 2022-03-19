@@ -19,6 +19,7 @@ const StyledCategories = styled.div`
   border-radius: 1rem;
   background-color: RGB(255, 252, 245);
   width: 18rem;
+  margin-top: 70px;
 `;
 
 const StyledContainerProducts = styled.div`
@@ -36,6 +37,10 @@ const Search = styled.div`
   width: 50%;
   height: 6rem;
   margin: auto;
+`;
+
+const ButtonCartWrapper = styled.div`
+  position: fixed;
 `;
 
 class Home extends React.Component {
@@ -82,7 +87,9 @@ class Home extends React.Component {
             Digite algum termo de pesquisa ou escolha uma categoria.
           </p>
         </Search>
-        <ButtonCart cartQuantity={ cartQuantity } />
+        <ButtonCartWrapper>
+          <ButtonCart cartQuantity={ cartQuantity } />
+        </ButtonCartWrapper>
         <Wrapper>
           <StyledCategories>
             {categoriesList.map((element) => (

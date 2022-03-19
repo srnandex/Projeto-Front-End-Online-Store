@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const StyledNames = styled.label`
   color: red;
   display: block;
-  height: 35px;
+  height: 2.65vh;
 `;
 
 class Categories extends React.Component {

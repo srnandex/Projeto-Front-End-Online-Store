@@ -15,6 +15,10 @@ const Wrapper = styled.div`
 
 const StyledCategories = styled.div`
   position: fixed;
+  border: 10px solid beige;
+  border-radius: 1rem;
+  background-color: RGB(255, 252, 245);
+  width: 18rem;
 `;
 
 const StyledContainerProducts = styled.div`
@@ -22,7 +26,16 @@ const StyledContainerProducts = styled.div`
   flex-flow: row wrap;
   align-items: center;
   justify-content: center;
-  margin-left: 300px;
+  margin-left: 17rem;
+`;
+
+const Search = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 50%;
+  height: 6rem;
+  margin: auto;
 `;
 
 class Home extends React.Component {
@@ -48,19 +61,27 @@ class Home extends React.Component {
     console.log(categoriesProduct);
     return (
       <div data-testid="page-not-found">
-        <input type="text" data-testid="query-input" onChange={ handle } />
-        <button
-          data-testid="query-button"
-          type="button"
-          onClick={ () => categoriesResults() }
-        >
-          Pesquisar
-        </button>
-        <p
-          data-testid="home-initial-message"
-        >
-          Digite algum termo de pesquisa ou escolha uma categoria.
-        </p>
+        <Search>
+          <input
+            style={ { borderRadius: '50px', width: '550px' } }
+            type="text"
+            data-testid="query-input"
+            onChange={ handle }
+          />
+          <button
+            style={ { borderRadius: '5px', width: '150px', cursor: 'pointer' } }
+            data-testid="query-button"
+            type="button"
+            onClick={ () => categoriesResults() }
+          >
+            Pesquisar
+          </button>
+          <p
+            data-testid="home-initial-message"
+          >
+            Digite algum termo de pesquisa ou escolha uma categoria.
+          </p>
+        </Search>
         <ButtonCart cartQuantity={ cartQuantity } />
         <Wrapper>
           <StyledCategories>

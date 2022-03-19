@@ -64,7 +64,7 @@ class Products extends React.Component {
 
     return (
       <>
-        <div data-testid="product-detail-name">
+        <div data-testid="product-detail-name" className="container">
           <ButtonCart cartQuantity={ cartQuantity } />
           <h1>{ infoDetails.title }</h1>
           <img src={ infoDetails.thumbnail } alt={ infoDetails.title } />

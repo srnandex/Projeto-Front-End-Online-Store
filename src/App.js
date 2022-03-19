@@ -104,7 +104,8 @@ export default class App extends Component {
   }
 
   render() {
-    const { savedProducts, categoryId, cartQuantity } = this.state;
+    const { savedProducts, categoryId, cartQuantity, categoriesProduct } = this.state;
+    console.log(categoriesProduct);
     console.log(savedProducts);
     console.log(cartQuantity);
 

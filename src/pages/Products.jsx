@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FaTruck, FaStar } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import ButtonCart from '../components/ButtonCart';
 import { getProducts } from '../services/api';
 
@@ -64,7 +65,14 @@ class Products extends React.Component {
 
     return (
       <div className="conteinerProduct">
-        <ButtonCart cartQuantity={ cartQuantity } />
+        <div className="buttonsCartAndReturn">
+          <Link to="/">
+            <button type="button" className="buttonReturnHome">
+              Voltar
+            </button>
+          </Link>
+          <ButtonCart cartQuantity={ cartQuantity } />
+        </div>
         <div className="productCard">
           <div className="product" data-testid="product-detail-name">
             <h1 className="productTitle">{ infoDetails.title }</h1>

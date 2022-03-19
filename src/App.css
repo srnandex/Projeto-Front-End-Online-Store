@@ -10,7 +10,7 @@
 
 .productCard {
   display: flex;
-  height: 450px;
+  height: 500px;
   justify-content: space-evenly;
   margin-left: 35px;
   margin-right: 35px;
@@ -109,4 +109,75 @@
   font-family: Playfair Display , serif;
   font-size: 25px;
   margin: 15px;
+}
+
+.checkoutImage {
+  margin-left: 100px;
+  width: 200px;
+}
+
+.checkoutQuantity {
+  color: #ff006d;
+  font-family: Playfair Display , serif;
+  font-size: 25px;
+  margin: 15px;
+}
+
+.checkoutPrice {
+  color: #ff006d;
+  font-family: Playfair Display , serif;
+  font-size: 25px;
+  margin: 15px;
+}
+
+.formCheckout {
+  border: solid 1px #f8961e;
+  display: flex;
+  flex-wrap: wrap;
+  height: 250px;
+  margin: 20px;
+  width: 400px;
+}
+
+.formCheckout input {
+  margin-left: 10px;
+  width: 300px;
+}
+
+.formCheckout label {
+  color: #f8961e;
+  margin-left: 20px;
+  width: 300px;
+}
+
+.buttonReturnCart {
+  background-color: #f8961e;
+  border-color: #f8961e;
+  border-radius: 15px;
+  cursor: pointer;
+  margin: 15px;
+  padding: 10px;
+}
+
+.buttonsCartAndReturn {
+  display: flex;
+  justify-content: space-around;
+}
+
+.buttonReturnHome {
+  background-color: #f8961e;
+  border-color: #f8961e;
+  border-radius: 15px;
+  cursor: pointer;
+  margin: 15px;
+  padding: 10px;
+}
+
+.buttonCart {
+  background-color: #f8961e;
+  border-color: #f8961e;
+  border-radius: 15px;
+  cursor: pointer;
+  margin: 15px;
+  padding: 10px;
 }

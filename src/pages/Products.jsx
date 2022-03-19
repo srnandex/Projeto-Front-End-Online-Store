@@ -63,89 +63,108 @@ class Products extends React.Component {
     const { email, description } = this.state;
 
     return (
-      <>
-        <div data-testid="product-detail-name">
-          <ButtonCart cartQuantity={ cartQuantity } />
-          <h1>{ infoDetails.title }</h1>
-          <img src={ infoDetails.thumbnail } alt={ infoDetails.title } />
-          {shipping.free_shipping
+      <div className="conteinerProduct">
+        <ButtonCart cartQuantity={ cartQuantity } />
+        <div className="productCard">
+          <div className="product" data-testid="product-detail-name">
+            <h1 className="productTitle">{ infoDetails.title }</h1>
+            <img
+              className="productImage"
+              src={ infoDetails.thumbnail }
+              alt={ infoDetails.title }
+            />
+            {shipping.free_shipping
           && (
-            <span>
+            <span className="productFree">
               Frete Grátis
-              <FaTruck />
+              <FaTruck
+                color="#000000"
+              />
             </span>
           )}
-          <h3>{infoDetails.price}</h3>
-          {productSpecs.length > 0 && productSpecs.map((element) => (
-            <h1 key={ element.name }>
-              {(element.name)}
-              :
-              {(element.value_name)}
-            </h1>
-          ))}
+            <h3 className="productPrice">
+              {`R$ ${infoDetails.price ? infoDetails.price : ''}`}
+            </h3>
+            <button
+              className="buttonAddCart"
+              type="button"
+              name={ id }
+              data-testid="product-detail-add-to-cart"
+              onClick={ (e) => saveCart(e) }
+            >
+              Adicionar ao carrinho
+            </button>
+          </div>
+          <div className="especific">
+            <h2 className="especificTitle">Especificações Técnicas</h2>
+            {productSpecs.length > 0 && productSpecs.map((element) => (
+              <li key={ element.name }>
+                {(element.name)}
+                :
+                {(element.value_name)}
+              </li>
+            ))}
+          </div>
         </div>
-        <button
-          type="button"
-          name={ id }
-          data-testid="product-detail-add-to-cart"
-          onClick={ (e) => saveCart(e) }
-        >
-          Adicionar ao carrinho
-        </button>
-        <form>
-          <label htmlFor="email">
-            Campo de Email:
-            <input
-              type="text"
-              name="email"
-              value={ email }
-              placeholder="Insira seu email"
-              data-testid="product-detail-email"
-              onChange={ (e) => this.handleChange(e) }
-            />
-          </label>
-          {Array(ratingArrayLength).fill(null).map((_element, i) => {
-            const index = i + 1;
-            return (
-              <label htmlFor="rating" key={ index }>
-                <input
-                  className="input-star"
-                  type="radio"
-                  data-testid={ `${index}-rating` }
-                  name="rating"
-                  value={ index }
-                  onClick={ (e) => this.handleChange(e) }
-                />
-                <FaStar
-                  className="star"
-                  size="30"
-                  color={ rating >= index
-                    ? '#fdee00'
-                    : '#1B1212' }
-                />
-              </label>);
-          })}
-          <label htmlFor="description">
-            <textarea
-              name="description"
-              value={ description }
-              onChange={ (e) => this.handleChange(e) }
-              data-testid="product-detail-evaluation"
-              // id="text-area"
-            />
-          </label>
-          <button
-            type="submit"
-            onClick={ (e) => this.handleButton(e) }
-            data-testid="submit-review-btn"
-          >
-            Enviar
-          </button>
-        </form>
+        <h1 className="formTitle">Avaliações</h1>
+        <div className="formAvailable">
+          <form>
+            <label htmlFor="email">
+              <input
+                className="formEmail"
+                type="text"
+                name="email"
+                value={ email }
+                placeholder="Insira seu email"
+                data-testid="product-detail-email"
+                onChange={ (e) => this.handleChange(e) }
+              />
+            </label>
+            {Array(ratingArrayLength).fill(null).map((_element, i) => {
+              const index = i + 1;
+              return (
+                <label htmlFor="rating" key={ index }>
+                  <input
+                    className="input-star"
+                    type="radio"
+                    data-testid={ `${index}-rating` }
+                    name="rating"
+                    value={ index }
+                    onClick={ (e) => this.handleChange(e) }
+                  />
+                  <FaStar
+                    className="star"
+                    size="25"
+                    color={ rating >= index
+                      ? '#fdee00'
+                      : '#1B1212' }
+                  />
+                </label>);
+            })}
+            <label htmlFor="description">
+              <textarea
+                className="formDescription"
+                name="description"
+                value={ description }
+                onChange={ (e) => this.handleChange(e) }
+                data-testid="product-detail-evaluation"
+                placeholder="Mensagem(opcional)"
+              />
+            </label>
+            <button
+              className="formButton"
+              type="submit"
+              onClick={ (e) => this.handleButton(e) }
+              data-testid="submit-review-btn"
+            >
+              Enviar
+            </button>
+          </form>
+        </div>
         <div>
           {(avaliacoes && avaliacoes.length > 0) && (
             avaliacoes.map((element, index) => (
-              <div key={ index }>
+              <div className="available" key={ index }>
                 <span>{element.email}</span>
                 <span>{element.rating}</span>
                 <span>{element.description}</span>
@@ -153,7 +172,7 @@ class Products extends React.Component {
             ))
           )}
         </div>
-      </>
+      </div>
     );
   }
 }

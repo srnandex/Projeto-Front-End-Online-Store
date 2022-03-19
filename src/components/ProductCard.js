@@ -15,7 +15,7 @@ class ProductCards extends React.Component {
         && (
           <span data-testid="free-shipping">
             <FaTruck />
-            Free shipping
+            Frete Grátis
           </span>
         )}
         <div className="img-product-card">

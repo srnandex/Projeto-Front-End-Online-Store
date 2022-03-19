@@ -9,13 +9,15 @@ const StyledCard = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   width: 40%;
-  margin: 5px;
+  margin: 0.2rem;
   background-color: #B7B734;
-  border: 10px solid beige;
-  border-radius: 10px;
+  border: 0.7rem solid beige;
+  border-radius: 3rem;
+  transition: transform 500ms ease;
 
   &:hover {
     opacity: 0.7;
+    transform: scale(1.05);
   }
 `;
 
@@ -44,25 +46,32 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
+const WrapperTitle = styled.div`
+  height: 12rem;
+  text-align: center;
+`;
+
 class ProductCards extends React.Component {
   render() {
     const { title, thumbnail, price, id, saveProduct, freeShipping } = this.props;
     return (
       <StyledCard data-testid="product">
-        <Link
-          to={ `/products/${id}` }
-          style={ { textDecoration: 'none' } }
-          data-testid="product-detail-link"
-        >
-          <Title text-decoration="none!important">{title}</Title>
-        </Link>
-        {freeShipping
+        <WrapperTitle>
+          <Link
+            to={ `/products/${id}` }
+            style={ { textDecoration: 'none' } }
+            data-testid="product-detail-link"
+          >
+            <Title text-decoration="none!important">{title}</Title>
+          </Link>
+          {freeShipping
         && (
           <span data-testid="free-shipping">
             <FaTruck />
             Frete Grátis
           </span>
         )}
+        </WrapperTitle>
         <ImageDiv className="img-product-card">
           <img height="200" src={ thumbnail } alt={ title } />
         </ImageDiv>

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import ButtonCart from '../components/ButtonCart';
 import { getCategories,
   /* getProductsFromCategoryAndQuery */
@@ -7,6 +8,22 @@ import { getCategories,
 // import { saveProducts } from '../services/saveProducts';
 import Categories from '../components/Categories';
 import ProductCards from '../components/ProductCard';
+
+const Wrapper = styled.div`
+  display: flex;
+`;
+
+const StyledCategories = styled.div`
+  position: fixed;
+`;
+
+const StyledContainerProducts = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  margin-left: 300px;
+`;
 
 class Home extends React.Component {
   constructor() {
@@ -45,25 +62,32 @@ class Home extends React.Component {
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
         <ButtonCart cartQuantity={ cartQuantity } />
-        {categoriesList.map((element) => (
-          <Categories
-            key={ element.id }
-            categoriesId={ element.id }
-            categoriesName={ element.name }
-            categoriesResults={ productCard }
-          />
-        ))}
-        {categoriesProduct.map((element) => (
-          <ProductCards
-            key={ element.id }
-            title={ element.title }
-            thumbnail={ element.thumbnail }
-            price={ element.price }
-            id={ element.id }
-            saveProduct={ saveCart }
-            freeShipping={ element.shipping.free_shipping }
-          />
-        ))}
+        <Wrapper>
+          <StyledCategories>
+            {categoriesList.map((element) => (
+              <Categories
+                key={ element.id }
+                categoriesId={ element.id }
+                categoriesName={ element.name }
+                categoriesResults={ productCard }
+              />
+            ))}
+          </StyledCategories>
+          <StyledContainerProducts>
+            {categoriesProduct.map((element) => (
+              <ProductCards
+                key={ element.id }
+                title={ element.title }
+                thumbnail={ element.thumbnail }
+                price={ element.price }
+                id={ element.id }
+                saveProduct={ saveCart }
+                freeShipping={ element.shipping.free_shipping }
+                // quantity={ element.available_quantity }
+              />
+            ))}
+          </StyledContainerProducts>
+        </Wrapper>
       </div>
     );
   }

@@ -9,6 +9,11 @@ class ShoppingCart extends React.Component {
     products.map((element) => console.log(element.quantity));
     return (
       <div>
+        <Link to="/">
+          <button type="button">
+            Voltar
+          </button>
+        </Link>
         {products.length > 0 ? products
           .map(({ title, quantity, id, thumbnail, availableQuantityInStock }) => (
             <div key={ title }>

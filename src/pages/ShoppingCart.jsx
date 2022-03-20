@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import device from '../devices/devices';
 
 const ButtonStyled = styled.button`
   background-color: #f8961e;
@@ -18,6 +19,14 @@ const Wrapper = styled.div`
   flex-direction: row;
   width: 100%;
   justify-content: center;
+
+  @media screen ${device.mobileL} {
+    display: block;
+  }
+
+  @media screen ${device.mobileM} {
+    display: block;
+  }
 `;
 
 const ProductContainer = styled.div`
@@ -34,6 +43,16 @@ const ProductContainer = styled.div`
   &:hover {
     opacity: 0.7;
     transform: scale(1.05);
+  }
+
+  @media screen ${device.mobileL} {
+    width: 50vh;
+    margin: 0 auto;
+    height: auto;
+  }
+
+  @media screen ${device.mobileM} {
+    width: 43vh;
   }
 `;
 

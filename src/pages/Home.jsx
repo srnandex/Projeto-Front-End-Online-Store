@@ -19,6 +19,7 @@ const StyledCategories = styled.div`
   border-radius: 1rem;
   background-color: RGB(255, 252, 245);
   width: 18rem;
+  margin-top: 70px;
 `;
 
 const StyledContainerProducts = styled.div`
@@ -36,6 +37,15 @@ const Search = styled.div`
   width: 50%;
   height: 6rem;
   margin: auto;
+`;
+
+const ButtonCartWrapper = styled.div`
+  position: fixed;
+`;
+
+const WrapperEverything = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 class Home extends React.Component {
@@ -60,7 +70,7 @@ class Home extends React.Component {
     const { categoriesList } = this.state;
     console.log(categoriesProduct);
     return (
-      <div data-testid="page-not-found">
+      <WrapperEverything data-testid="page-not-found">
         <Search>
           <input
             style={ { borderRadius: '50px', width: '550px' } }
@@ -82,18 +92,20 @@ class Home extends React.Component {
             Digite algum termo de pesquisa ou escolha uma categoria.
           </p>
         </Search>
-        <ButtonCart cartQuantity={ cartQuantity } />
+        <ButtonCartWrapper>
+          <ButtonCart cartQuantity={ cartQuantity } />
+        </ButtonCartWrapper>
+        <StyledCategories>
+          {categoriesList.map((element) => (
+            <Categories
+              key={ element.id }
+              categoriesId={ element.id }
+              categoriesName={ element.name }
+              categoriesResults={ productCard }
+            />
+          ))}
+        </StyledCategories>
         <Wrapper>
-          <StyledCategories>
-            {categoriesList.map((element) => (
-              <Categories
-                key={ element.id }
-                categoriesId={ element.id }
-                categoriesName={ element.name }
-                categoriesResults={ productCard }
-              />
-            ))}
-          </StyledCategories>
           <StyledContainerProducts>
             {categoriesProduct.map((element) => (
               <ProductCards
@@ -109,7 +121,7 @@ class Home extends React.Component {
             ))}
           </StyledContainerProducts>
         </Wrapper>
-      </div>
+      </WrapperEverything>
     );
   }
 }

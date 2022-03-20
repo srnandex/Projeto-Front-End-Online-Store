@@ -22,7 +22,7 @@ const StyledCard = styled.div`
 `;
 
 const Title = styled.h1`
-  color: #E04DB0;
+  color: #ff006d;
   cursor: pointer;
 `;
 
@@ -76,7 +76,7 @@ class ProductCards extends React.Component {
           <img height="200" src={ thumbnail } alt={ title } />
         </ImageDiv>
         <Wrapper>
-          <p style={ { color: '#E04DB0' } }>
+          <p style={ { color: '#ff006d' } }>
             R$
             {price}
           </p>
